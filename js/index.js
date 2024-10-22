@@ -29,23 +29,75 @@ function mostrarListaProductos(){
                     2.Apple Watch.
                     3.Macbook.`));
 
-    if(productos === 1){
-        alert(`Iphone 16 Pro Max: 1500 USD.
+    switch (productos) {
+        case 1:
+            alert(`Iphone 16 Pro Max: 1500 USD.
                Iphone 16 Plus: 1400 USD.
                Iphone 16: 1200 USD.
                Iphone 15 Pro max: 1300 USD.
                Iphone 15: 1000 USD`);
-    }else if(productos === 2){
-        alert(`Apple watch Ultra: 1000 USD.
+            break;
+
+        case 2:
+            alert(`Apple watch Ultra: 1000 USD.
                Apple watch SE: 800 USD.
                Apple watch G9: 900 USD.`);
-    }else if(productos === 3){
-        alert(`Macbook Pro M3: 2000 USD.
-               Macbook Air M3: 1800 USD.
-               Imac: 1700 USD. `);
-    }else{
-        alert('Ingresaste un numero invalido.');
+            break
+
+        case 3:
+            alert(`Macbook Pro M3: 2000 USD.
+            Macbook Air M3: 1800 USD.
+            Imac: 1700 USD. `);
+            break
+    
+        default:
+            alert('Ingresaste un numero invalido.');
+            break;
     }
 }
 mostrarListaProductos();
 
+
+class Productos{
+        constructor(producto, modelo, precio){
+            this.producto = producto;
+            this.modelo = modelo;
+            this.precio = precio;
+        }
+
+        calcularPrecioCambio(){
+            let dolar = 1300;
+            alert(`El valor del producto: ${this.producto}, ${this.modelo} convertido en pesos es de $${this.precio * dolar}`);
+        }
+}
+
+const iphone = new Productos('iphone', 'Pro max 16', 1500);
+iphone.calcularPrecioCambio();
+
+
+
+const celulares = [
+    {producto: "iphone", modelo: "Pro max 16", precio: 1500},
+    {producto: "iphone", modelo: "Plus 16", precio: 1400},
+    {producto: "iphone", modelo: "16", precio: 1200},
+    {producto: "iphone", modelo: "Pro max 15", precio: 1300},
+    {producto: "iphone", modelo: "15", precio: 1000},
+    {producto: "iphone", modelo: "Pro max 14", precio: 900},
+    {producto: "iphone", modelo: "14", precio: 800},  
+    {producto: "iphone", modelo: "Pro max 13", precio: 700},
+    {producto: "iphone", modelo: "13", precio: 600}    
+];
+
+const busqueda = celulares.filter((elemento)=>elemento.modelo.includes("16"));
+console.log(busqueda);
+
+
+const computadoras = [
+    {producto: "mac", modelo: "macbook Pro M3", precio: 2000},
+    {producto: "mac", modelo: "macbook Air M3", precio: 1300},
+    {producto: "mac", modelo: "Imac", precio: 1500},
+    {producto: "mac", modelo: "mini ", precio: 1200},
+    {producto: "mac", modelo: "studio", precio: 1800},
+];
+
+computadoras.forEach(pc => {console.log(pc);});
