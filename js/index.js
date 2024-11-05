@@ -1,13 +1,12 @@
 let nombre = prompt('Ingrese su nombre');
-let apellido = prompt('Ingrese su apellido');
-let email = prompt('Ingrese su mail');
-let edad = parseInt(prompt('Ingrese su edad'));
+let apellido = prompt('Ingrese su apellido'); 
+let email = prompt('Ingrese su mail'); 
+let edad = parseInt(prompt('Ingrese su edad')); 
 
-if(edad < 18){
-    alert('Lo sentimos ' + nombre + ' ' + apellido + ' no puedes entrar a este sitio.');
-}else{
-    alert('Bienvenido a JOTA ' + nombre + ' ' + apellido );
-}
+if (edad < 18) { 
+    alert(`Lo sentimos ${nombre} ${apellido}, no puedes entrar a este sitio.`);
+ } else { 
+    alert(`Bienvenido a JOTA ${nombre} ${apellido}`); }
 
 
 for(let i = 0; i < 3; i++){
@@ -101,3 +100,128 @@ const computadoras = [
 ];
 
 computadoras.forEach(pc => {console.log(pc);});
+
+
+
+
+
+
+const enlaceContacto = document.getElementById("contacto");
+
+let contacto = enlaceContacto.addEventListener('click', function(){
+    
+    prompt('Envianos tu consulta');
+})
+
+
+let productos = [
+    {
+        id: 1,
+        nombre: "IPhone 16 Pro max",
+        precio: 1500,
+    },
+    {
+        id: 2,
+        nombre: "IPhone 16 Plus",
+        precio: 1350,
+    },
+    {
+        id: 3,
+        nombre: "IPhone 16",
+        precio: 1200,
+    },
+    {
+        id: 4,
+        nombre: "IPhone 15 Pro Max",
+        precio: 1400,
+    },
+    {
+        id: 5,
+        nombre: "IPhone 15 Plus",
+        precio: 1100,
+    },
+    {
+        id: 6,
+        nombre: "IPhone 15",
+        precio: 1000,
+    },
+    {
+        id: 7,
+        nombre: "IPhone 14 Pro max",
+        precio: 1150,
+
+    },
+    {
+        id: 8,
+        nombre: "IPhone 14",
+        precio: 950,
+    }
+
+    ];
+
+    function mostrarProductos(){
+        const productosDiv = document.getElementById("productos");
+        productos.forEach(producto => {
+            const div = document.createElement('div');
+            div.innerHTML = 
+            `
+            <h3>${producto.nombre}</h3>
+            <p>precio: $${producto.precio}</p>
+            <button onclick="agregarAlCarrito(${producto.id})">Agregar al carrito </button>
+            `;
+            productosDiv.appendChild(div);
+
+        })
+    }
+
+    function agregarAlCarrito(id){
+        const CARRITO = JSON.parse(localStorage.getItem('carrito')) || [];
+        const PRODUCTO = productos.find(prod => prod.id === id);
+
+        const productoEnCarrito = CARRITO.find(prod => prod.id === id);
+
+        if(productoEnCarrito){
+            productoEnCarrito.cantidad += 1;
+        }else{
+            CARRITO.push({...PRODUCTO, cantidad: 1})
+        }
+
+        localStorage.setItem('carrito', JSON.stringify(CARRITO));
+        mostrarCarrito();
+    }
+
+
+    function mostrarCarrito(){
+        const CARRITO = JSON.parse(localStorage.getItem('carrito')) || [];
+        
+        const carritoList = document.getElementById('carrito');
+        carritoList.innerHTML = '';
+        let total = 0;
+
+        CARRITO.forEach(producto => {
+            let li = document.createElement('li');
+            li.textContent = `${producto.nombre} - ${producto.precio}`;
+            li.innerHTML += `<button onclick = "eliminarDelCarrito(${producto.id})"> Eliminar producto </button> `;
+            carritoList.appendChild(li);
+            total += producto.precio * producto.cantidad;
+        });
+
+        document.getElementById('total').textContent = `total: $${total}`
+
+    }
+
+
+    function eliminarDelCarrito(id) {
+
+        const CARRITO = JSON.parse(localStorage.getItem('carrito')) || [];
+        const nuevoCarrito = CARRITO.filter(prod => prod.id !== id);
+        
+        localStorage.setItem('carrito', JSON.stringify(nuevoCarrito));
+
+        mostrarCarrito();
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        mostrarProductos();
+        mostrarCarrito();
+    });
